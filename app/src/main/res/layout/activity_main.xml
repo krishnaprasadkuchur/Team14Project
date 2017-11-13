@@ -1,18 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="group14.mc.asu.edu.brainnetteam14.MainActivity">
+    android:id="@+id/activity_health_monitor"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context="group14.mc.asu.edu.brainnetteam14.MainActivity"
+    android:background="#000000">
 
-    <TextView
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/relativeLayout">
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:text="Patient ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/textView13"
+            android:textSize="10sp"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:text="Patient Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textView14"
+            android:layout_marginStart="24dp"
+            android:id="@+id/textView15"
+            android:textSize="10sp"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:text="Age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textView13"
+            android:layout_marginStart="18dp"
+            android:id="@+id/textView14"
+            android:textSize="10sp"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:text="Sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textView15"
+            android:layout_marginStart="30dp"
+            android:id="@+id/textView16"
+            android:textSize="10sp"
+            android:textStyle="normal|bold" />
+
+        <EditText
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:inputType="number"
+            android:ems="10"
+            android:layout_below="@+id/textView13"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="7dp"
+            android:id="@+id/User_ID"
+            android:textSize="10sp"
+            android:hint="Patient ID"
+            style="@android:style/Widget.AutoCompleteTextView" />
+
+        <EditText
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:inputType="number"
+            android:ems="10"
+            android:layout_alignTop="@+id/User_ID"
+            android:layout_toEndOf="@+id/User_ID"
+            android:id="@+id/Age"
+            android:hint="Age"
+            android:textSize="10sp" />
+
+        <EditText
+            android:layout_width="75dp"
+            android:layout_height="35dp"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:layout_alignTop="@+id/Age"
+            android:layout_toEndOf="@+id/Age"
+            android:layout_marginStart="10dp"
+            android:id="@+id/User_Name"
+            android:textSize="10sp"
+            android:hint="Patient Name" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignTop="@+id/User_Name"
+            android:layout_toEndOf="@+id/User_Name"
+            android:layout_marginStart="15dp"
+            android:checkedButton="@+id/Patient_Male"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:text="Male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/User_Name"
+                android:layout_toEndOf="@+id/textView15"
+                android:id="@+id/Patient_Male"
+                android:textSize="8sp"
+                android:layout_weight="1"
+                style="@android:style/Widget.Holo.Light.CompoundButton.RadioButton" />
+
+            <RadioButton
+                android:text="Female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:id="@+id/Patient_Female"
+                android:textSize="8sp"
+                android:layout_alignBottom="@+id/User_Name"
+                android:layout_toEndOf="@+id/textView16"
+                android:layout_weight="0.37" />
+        </RadioGroup>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/setUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/relativeLayout"
+        android:layout_marginStart="47dp"
+        android:layout_toEndOf="@+id/relativeLayout"
+        android:background="@android:color/holo_green_light"
+        android:text="SetUp"
+        android:textStyle="normal|bold" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/monitor"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="100dp"
+        app:seriesColor="#ee0000"
+        app:seriesType="line" />
+
+    <Button
+        android:id="@+id/logOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_toStartOf="@+id/setUp"
+        android:onClick="LogOut"
+        android:text="Log Out"
+        android:textStyle="bold" />
+
+</RelativeLayout>

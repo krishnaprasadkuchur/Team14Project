@@ -26,7 +26,7 @@ public class SplashScreen extends AppCompatActivity {
                         .placeholder(R.drawable.background))
                 .into(gifImageView);
 
-        new CountDownTimer(3000,1000){
+        new CountDownTimer(3500,1000){
             @Override
             public void onTick(long millisUntilFinished){}
 

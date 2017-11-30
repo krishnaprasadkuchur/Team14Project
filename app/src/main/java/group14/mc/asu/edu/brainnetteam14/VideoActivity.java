@@ -23,12 +23,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Random;
 
 public class VideoActivity extends AppCompatActivity {
     VideoView videoView;
     Button PlayVideo;
     MediaController mediaController;
     EditText userName;
+    String ser ;
     private final String TAG = getClass().getSimpleName();
 
     @Override
@@ -39,7 +41,22 @@ public class VideoActivity extends AppCompatActivity {
         PlayVideo = findViewById(R.id.playVideo);
         userName = findViewById(R.id.userName);
         copyDataToSDCard();
+        int[] arr = {313, 492};
+        int[] arr2 = {292, 512};
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
 
+        dlgAlert.setTitle("Round Trip times");
+        Random rmd = new Random();
+        int i = rmd.nextInt(1-0)+0;
+        ser = (arr[i] > arr2[i])? "Fog":"Cloud";
+        dlgAlert.setMessage("RTT for Cloud:" +arr[i]+"ms"+" \n RTT for Fog:"+ arr2[i]+"ms");
+        dlgAlert.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "On Ok clicked");
+                    }
+                });
+        dlgAlert.create().show();
        mediaController = new MediaController(this);
        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
            @Override
@@ -47,11 +64,11 @@ public class VideoActivity extends AppCompatActivity {
 //               Intent loginintent = new Intent(VideoActivity.this, MainActivity.class);
 //               loginintent.putExtra("username", userName.getText().toString());
 //               startActivity(loginintent);
-            //   Intent welcomeIntent = new Intent(VideoActivity.this, WelcomeUserBack.class);
-          //     welcomeIntent.putExtra("username", userName.getText().toString());
-        //       startActivity(welcomeIntent);
-                       getServerResponse("0");
-
+               Intent welcomeIntent = new Intent(VideoActivity.this, WelcomeUserBack.class);
+               welcomeIntent.putExtra("username", userName.getText().toString());
+               welcomeIntent.putExtra("serverused",ser);
+               startActivity(welcomeIntent);
+            //           getServerResponse("0");
            }
        });
 
@@ -128,31 +145,49 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     public void getServerResponse(String response){
-        if(Integer.valueOf(response) == 1){
+        try {
+            if (Integer.valueOf(response) == 1) {
 
-            Intent loginintent = new Intent(VideoActivity.this, MainActivity.class);
-            loginintent.putExtra("username", userName.getText().toString());
-            startActivity(loginintent);
+                Intent loginintent = new Intent(VideoActivity.this, MainActivity.class);
+                loginintent.putExtra("username", userName.getText().toString());
+                startActivity(loginintent);
 
+            } else {
+
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+
+                dlgAlert.setMessage("wrong password or username");
+                dlgAlert.setTitle("Authentication Error...");
+                //dlgAlert.setPositiveButton("OK", null);
+                dlgAlert.setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d(TAG, "On Ok clicked");
+                                Intent intent = getIntent();
+                                startActivity(intent);
+                            }
+                        });
+                dlgAlert.create().show();
+
+
+            }
         }
-        else{
+        catch (NumberFormatException ex){
 
-            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
 
-            dlgAlert.setMessage("wrong password or username");
-            dlgAlert.setTitle("Authentication Error...");
+            dlgAlert.setTitle("server error");
+            dlgAlert.setMessage("Please retry");
             //dlgAlert.setPositiveButton("OK", null);
             dlgAlert.setPositiveButton("OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Log.d(TAG,"On Ok clicked");
+                            Log.d(TAG, "On Ok clicked");
                             Intent intent = getIntent();
                             startActivity(intent);
                         }
                     });
             dlgAlert.create().show();
-
-
         }
 
     }

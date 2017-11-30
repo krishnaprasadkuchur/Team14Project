@@ -1,9 +1,11 @@
 package group14.mc.asu.edu.brainnetteam14;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,17 +38,19 @@ public class VideoActivity extends AppCompatActivity {
         videoView = findViewById(R.id.loginView);
         PlayVideo = findViewById(R.id.playVideo);
         userName = findViewById(R.id.userName);
-//        parseEDF = new ParseEDF();
-
         copyDataToSDCard();
 
        mediaController = new MediaController(this);
        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
            @Override
            public void onCompletion(MediaPlayer mediaPlayer) {
-               Intent loginintent = new Intent(VideoActivity.this, MainActivity.class);
-               loginintent.putExtra("username", userName.getText().toString());
-               startActivity(loginintent);
+//               Intent loginintent = new Intent(VideoActivity.this, MainActivity.class);
+//               loginintent.putExtra("username", userName.getText().toString());
+//               startActivity(loginintent);
+            //   Intent welcomeIntent = new Intent(VideoActivity.this, WelcomeUserBack.class);
+          //     welcomeIntent.putExtra("username", userName.getText().toString());
+        //       startActivity(welcomeIntent);
+                       getServerResponse("0");
 
            }
        });
@@ -121,6 +125,36 @@ public class VideoActivity extends AppCompatActivity {
             videoView.start();
 
         }
+    }
+
+    public void getServerResponse(String response){
+        if(Integer.valueOf(response) == 1){
+
+            Intent loginintent = new Intent(VideoActivity.this, MainActivity.class);
+            loginintent.putExtra("username", userName.getText().toString());
+            startActivity(loginintent);
+
+        }
+        else{
+
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+
+            dlgAlert.setMessage("wrong password or username");
+            dlgAlert.setTitle("Authentication Error...");
+            //dlgAlert.setPositiveButton("OK", null);
+            dlgAlert.setPositiveButton("OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Log.d(TAG,"On Ok clicked");
+                            Intent intent = getIntent();
+                            startActivity(intent);
+                        }
+                    });
+            dlgAlert.create().show();
+
+
+        }
+
     }
 
     @Override
